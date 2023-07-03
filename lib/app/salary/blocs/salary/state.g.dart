@@ -17,7 +17,7 @@ _$_SalaryState _$$_SalaryStateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_SalaryStateToJson(_$_SalaryState instance) =>
     <String, dynamic>{
-      'calculation': instance.calculation,
-      'config': instance.config,
-      'calendar': instance.calendar,
+      'calculation': instance.calculation.toJson(),
+      'config': instance.config.toJson(),
+      'calendar': instance.calendar.toJson(),
     };

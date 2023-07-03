@@ -21,11 +21,9 @@ CalendarConfig _$CalendarConfigFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CalendarConfig {
   DateTime get currentDate => throw _privateConstructorUsedError;
-  int get month => throw _privateConstructorUsedError;
-  int get year => throw _privateConstructorUsedError;
   List<DateTime> get range => throw _privateConstructorUsedError;
-  bool get isPrepayment => throw _privateConstructorUsedError;
   int get daysLeft => throw _privateConstructorUsedError;
+  CalendarConstraints get constraints => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,11 +39,11 @@ abstract class $CalendarConfigCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime currentDate,
-      int month,
-      int year,
       List<DateTime> range,
-      bool isPrepayment,
-      int daysLeft});
+      int daysLeft,
+      CalendarConstraints constraints});
+
+  $CalendarConstraintsCopyWith<$Res> get constraints;
 }
 
 /// @nodoc
@@ -62,38 +60,36 @@ class _$CalendarConfigCopyWithImpl<$Res, $Val extends CalendarConfig>
   @override
   $Res call({
     Object? currentDate = null,
-    Object? month = null,
-    Object? year = null,
     Object? range = null,
-    Object? isPrepayment = null,
     Object? daysLeft = null,
+    Object? constraints = null,
   }) {
     return _then(_value.copyWith(
       currentDate: null == currentDate
           ? _value.currentDate
           : currentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      month: null == month
-          ? _value.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int,
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
       range: null == range
           ? _value.range
           : range // ignore: cast_nullable_to_non_nullable
               as List<DateTime>,
-      isPrepayment: null == isPrepayment
-          ? _value.isPrepayment
-          : isPrepayment // ignore: cast_nullable_to_non_nullable
-              as bool,
       daysLeft: null == daysLeft
           ? _value.daysLeft
           : daysLeft // ignore: cast_nullable_to_non_nullable
               as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as CalendarConstraints,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CalendarConstraintsCopyWith<$Res> get constraints {
+    return $CalendarConstraintsCopyWith<$Res>(_value.constraints, (value) {
+      return _then(_value.copyWith(constraints: value) as $Val);
+    });
   }
 }
 
@@ -107,11 +103,12 @@ abstract class _$$_CalendarConfigCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime currentDate,
-      int month,
-      int year,
       List<DateTime> range,
-      bool isPrepayment,
-      int daysLeft});
+      int daysLeft,
+      CalendarConstraints constraints});
+
+  @override
+  $CalendarConstraintsCopyWith<$Res> get constraints;
 }
 
 /// @nodoc
@@ -126,37 +123,27 @@ class __$$_CalendarConfigCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentDate = null,
-    Object? month = null,
-    Object? year = null,
     Object? range = null,
-    Object? isPrepayment = null,
     Object? daysLeft = null,
+    Object? constraints = null,
   }) {
     return _then(_$_CalendarConfig(
       currentDate: null == currentDate
           ? _value.currentDate
           : currentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      month: null == month
-          ? _value.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int,
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
       range: null == range
           ? _value._range
           : range // ignore: cast_nullable_to_non_nullable
               as List<DateTime>,
-      isPrepayment: null == isPrepayment
-          ? _value.isPrepayment
-          : isPrepayment // ignore: cast_nullable_to_non_nullable
-              as bool,
       daysLeft: null == daysLeft
           ? _value.daysLeft
           : daysLeft // ignore: cast_nullable_to_non_nullable
               as int,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as CalendarConstraints,
     ));
   }
 }
@@ -166,11 +153,9 @@ class __$$_CalendarConfigCopyWithImpl<$Res>
 class _$_CalendarConfig implements _CalendarConfig {
   const _$_CalendarConfig(
       {required this.currentDate,
-      required this.month,
-      required this.year,
       required final List<DateTime> range,
-      required this.isPrepayment,
-      required this.daysLeft})
+      required this.daysLeft,
+      required this.constraints})
       : _range = range;
 
   factory _$_CalendarConfig.fromJson(Map<String, dynamic> json) =>
@@ -178,10 +163,6 @@ class _$_CalendarConfig implements _CalendarConfig {
 
   @override
   final DateTime currentDate;
-  @override
-  final int month;
-  @override
-  final int year;
   final List<DateTime> _range;
   @override
   List<DateTime> get range {
@@ -191,13 +172,13 @@ class _$_CalendarConfig implements _CalendarConfig {
   }
 
   @override
-  final bool isPrepayment;
-  @override
   final int daysLeft;
+  @override
+  final CalendarConstraints constraints;
 
   @override
   String toString() {
-    return 'CalendarConfig(currentDate: $currentDate, month: $month, year: $year, range: $range, isPrepayment: $isPrepayment, daysLeft: $daysLeft)';
+    return 'CalendarConfig(currentDate: $currentDate, range: $range, daysLeft: $daysLeft, constraints: $constraints)';
   }
 
   @override
@@ -207,19 +188,17 @@ class _$_CalendarConfig implements _CalendarConfig {
             other is _$_CalendarConfig &&
             (identical(other.currentDate, currentDate) ||
                 other.currentDate == currentDate) &&
-            (identical(other.month, month) || other.month == month) &&
-            (identical(other.year, year) || other.year == year) &&
             const DeepCollectionEquality().equals(other._range, _range) &&
-            (identical(other.isPrepayment, isPrepayment) ||
-                other.isPrepayment == isPrepayment) &&
             (identical(other.daysLeft, daysLeft) ||
-                other.daysLeft == daysLeft));
+                other.daysLeft == daysLeft) &&
+            (identical(other.constraints, constraints) ||
+                other.constraints == constraints));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentDate, month, year,
-      const DeepCollectionEquality().hash(_range), isPrepayment, daysLeft);
+  int get hashCode => Object.hash(runtimeType, currentDate,
+      const DeepCollectionEquality().hash(_range), daysLeft, constraints);
 
   @JsonKey(ignore: true)
   @override
@@ -238,11 +217,9 @@ class _$_CalendarConfig implements _CalendarConfig {
 abstract class _CalendarConfig implements CalendarConfig {
   const factory _CalendarConfig(
       {required final DateTime currentDate,
-      required final int month,
-      required final int year,
       required final List<DateTime> range,
-      required final bool isPrepayment,
-      required final int daysLeft}) = _$_CalendarConfig;
+      required final int daysLeft,
+      required final CalendarConstraints constraints}) = _$_CalendarConfig;
 
   factory _CalendarConfig.fromJson(Map<String, dynamic> json) =
       _$_CalendarConfig.fromJson;
@@ -250,15 +227,11 @@ abstract class _CalendarConfig implements CalendarConfig {
   @override
   DateTime get currentDate;
   @override
-  int get month;
-  @override
-  int get year;
-  @override
   List<DateTime> get range;
   @override
-  bool get isPrepayment;
-  @override
   int get daysLeft;
+  @override
+  CalendarConstraints get constraints;
   @override
   @JsonKey(ignore: true)
   _$$_CalendarConfigCopyWith<_$_CalendarConfig> get copyWith =>

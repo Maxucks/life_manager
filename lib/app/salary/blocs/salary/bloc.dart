@@ -1,60 +1,49 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:life_manager/app/core/service_locator/service_locator.dart';
+import 'package:life_manager/app/core/utils/date_time_utils.dart';
 import 'package:life_manager/app/salary/blocs/salary/events.dart';
 import 'package:life_manager/app/salary/blocs/salary/state.dart';
-import 'package:life_manager/app/salary/utils/calendar_manager.dart';
-import 'package:life_manager/app/salary/utils/salary_manager/salary_manager.dart';
-import 'package:life_manager/app/salary/utils/salary_manager/tax_calculator.dart';
+import 'package:life_manager/app/salary/services/salary_calendar_service.dart';
+import 'package:life_manager/app/salary/services/salary_service.dart';
 
 class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
   SalaryBloc() : super(SalaryState.initial()) {
+    on<SetupSalaryEvent>(_setupSalaryHandler);
     on<CalculateSalaryEvent>(_calculateSalaryHandler);
-    on<SetupSalaryCalendarEvent>(_setupCalendarHandler);
-    on<SetupSalaryCalculatorEvent>(_setupCalculatorHandler);
     on<SetupAndCalculateSalaryEvent>(_setupAndCalculateHandler);
     on<UpdateWeekendsSalaryEvent>(_updateWeekendsHandler);
     on<ToggleHolidaySalaryEvent>(_toggleHolidayHandler);
   }
 
-  void _setupCalendarHandler(
-    SetupSalaryCalendarEvent event,
+  void _setupSalaryHandler(
+    SetupSalaryEvent event,
     Emitter<SalaryState> emit,
   ) {
     final date = event.date ?? DateTime.now();
 
-    final range = CalendarManager.createRangeFromBoundaries(
+    final calendarService = sl<SalaryCalendarService>();
+
+    final constraints = calendarService.getConstraints(
+      date: date,
+      boundaries: state.config.boundaries,
+    );
+    final range = calendarService.createRangeFromBoundaries(
       date: date,
       boundaries: state.config.boundaries,
       middleDay: state.config.middleDay,
+      constraints: constraints,
     );
-
-    final daysTillSalary = CalendarManager.daysLeftTillSalary(
+    final daysTillSalary = calendarService.daysLeftTillSalary(
       date: date,
       range: range,
     );
 
     emit(state.copyWith(
       calendar: state.calendar.copyWith(
+        range: range,
         currentDate: date,
         daysLeft: daysTillSalary,
-        range: range,
-      ),
-    ));
-  }
-
-  void _setupCalculatorHandler(
-    SetupSalaryCalculatorEvent event,
-    Emitter<SalaryState> emit,
-  ) {
-    final (year, month, isPrepayment) = CalendarManager.partitonInfo(
-      date: state.calendar.currentDate,
-      boundaries: state.config.boundaries,
-    );
-
-    emit(state.copyWith(
-      calendar: state.calendar.copyWith(
-        month: month,
-        year: year,
-        isPrepayment: isPrepayment,
+        constraints: constraints,
       ),
     ));
   }
@@ -63,22 +52,24 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
     CalculateSalaryEvent event,
     Emitter<SalaryState> emit,
   ) {
-    const salaryManager = SalaryManager(
-      taxCalculator: NDFLCalculator(),
+    final calendarService = sl<SalaryCalendarService>();
+    final salaryService = sl<SalaryService>();
+
+    final monthRange = calendarService.createFullMonthRange(
+      state.calendar.currentDate,
+      state.calendar.constraints,
     );
 
-    final salaryCalculation = salaryManager.calculateByRange(
+    final salaryCalculation = salaryService.calculateByRange(
       rate: state.config.rate,
       hpdContract: state.config.hpdContract,
       hpdNorm: state.config.hpdNorm,
       middleDay: state.config.middleDay,
       weekends: state.config.weekends,
       holidays: state.config.holidays,
-      year: state.calendar.year,
-      month: state.calendar.month,
-      range: CalendarManager.createFullMonthRange(
-        state.calendar.range.first,
-      ),
+      year: state.calendar.constraints.year,
+      month: state.calendar.constraints.month,
+      range: monthRange,
     );
 
     emit(state.copyWith(
@@ -90,8 +81,7 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
     SetupAndCalculateSalaryEvent event,
     Emitter<SalaryState> emit,
   ) {
-    add(SetupSalaryCalendarEvent(date: event.date));
-    add(SetupSalaryCalculatorEvent());
+    add(SetupSalaryEvent(date: event.date));
     add(CalculateSalaryEvent());
   }
 

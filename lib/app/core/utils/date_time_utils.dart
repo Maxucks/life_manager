@@ -23,6 +23,8 @@ const monthNames = [
   "December",
 ];
 
+String monthName(int month) => monthNames[month - 1];
+
 extension DateTimeUtils on DateTime {
   DateTime get firstDayOfWeek => subtract(Duration(days: weekday - 1));
 

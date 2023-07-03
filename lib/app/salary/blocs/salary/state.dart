@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:life_manager/app/salary/models/calendar_config.dart';
+import 'package:life_manager/app/salary/models/calendar_constraints.dart';
 import 'package:life_manager/app/salary/models/salary_calculation.dart';
 import 'package:life_manager/app/salary/models/salary_config.dart';
+import 'package:life_manager/app/salary/services/salary_calendar_service.dart';
 
 part 'state.freezed.dart';
 part 'state.g.dart';
@@ -34,11 +36,13 @@ class SalaryState with _$SalaryState {
       ),
       calendar: CalendarConfig(
         currentDate: DateTime.now(),
-        month: 1,
-        year: 0,
         range: const [],
-        isPrepayment: true,
         daysLeft: 0,
+        constraints: const CalendarConstraints(
+          year: 1970,
+          month: 1,
+          isPrepayment: true,
+        ),
       ),
     );
   }

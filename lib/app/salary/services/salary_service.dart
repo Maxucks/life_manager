@@ -1,28 +1,24 @@
 import 'package:life_manager/app/salary/models/salary_calculation.dart';
-import 'package:life_manager/app/salary/utils/calendar_manager.dart';
-import 'package:life_manager/app/salary/utils/salary_manager/tax_calculator.dart';
+import 'package:life_manager/app/salary/services/salary_calendar_service.dart';
+import 'package:life_manager/app/salary/utils/tax_calculator.dart';
 
-/// * `hpd` is `hours per day`
-///
-///
-/// `hpdNorm`, `hpdContract`: for example, working norm is 8h per day (`hpdNorm`),
-/// but I have only 7h per day in contract (`hpdContract`)
-///
-/// `weekends`: for example = `{ DateTime.saturday, DateTime.sunday }`
-class SalaryManager {
-  const SalaryManager({
+class SalaryService {
+  const SalaryService({
     required this.taxCalculator,
   });
 
   final TaxCalculator taxCalculator;
 
-  double _getTotal({
+  /// Calculates total salary value without taxes
+  /// and relative to hours ratio
+  double calculateTotal({
     required double rate,
     required int hpdNorm,
     required int hpdContract,
   }) =>
       taxCalculator.calculate(rate) * (hpdContract / hpdNorm);
 
+  /// Calculates all the values of salary by given [CalendarRange]
   SalaryCalculation calculateByRange({
     required double rate,
     required int year,
@@ -48,7 +44,7 @@ class SalaryManager {
       }
     }
     final workingDaysCount = workingDays.length;
-    final total = _getTotal(
+    final total = calculateTotal(
       rate: rate,
       hpdContract: hpdContract,
       hpdNorm: hpdNorm,

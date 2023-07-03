@@ -2,15 +2,13 @@ abstract class SalaryEvent {}
 
 class CalculateSalaryEvent extends SalaryEvent {}
 
-class SetupSalaryCalendarEvent extends SalaryEvent {
-  SetupSalaryCalendarEvent({
+class SetupSalaryEvent extends SalaryEvent {
+  SetupSalaryEvent({
     this.date,
   });
 
   final DateTime? date;
 }
-
-class SetupSalaryCalculatorEvent extends SalaryEvent {}
 
 class SetupAndCalculateSalaryEvent extends SalaryEvent {
   SetupAndCalculateSalaryEvent({

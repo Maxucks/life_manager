@@ -41,7 +41,6 @@ class _SalaryScreenState extends State<SalaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(DateTime.now().toString());
     return BlocBuilder<SalaryBloc, SalaryState>(
       builder: (context, state) {
         return Scaffold(
@@ -60,11 +59,13 @@ class _SalaryScreenState extends State<SalaryScreen> {
                     whetherActive: (date) {
                       final midDay = state.config.middleDay;
 
-                      if (state.calendar.isPrepayment) {
+                      if (state.calendar.constraints.isPrepayment) {
                         return date.day <= midDay;
                       } else {
                         final lastMonthDay = _getLastDayOfSalaryMonth(
-                            state.calendar.year, state.calendar.month);
+                          state.calendar.constraints.year,
+                          state.calendar.constraints.month,
+                        );
                         return date.day > midDay && date.day <= lastMonthDay;
                       }
                     },
@@ -74,9 +75,9 @@ class _SalaryScreenState extends State<SalaryScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: _buildSection(
                       title:
-                          "${monthNames[state.calendar.month]} ${state.calendar.year}",
+                          "${monthName(state.calendar.constraints.month)} ${state.calendar.constraints.year}",
                       trailing:
-                          "${state.calendar.daysLeft} days till ${state.calendar.isPrepayment ? "prepayment" : "salary"}",
+                          "${state.calendar.daysLeft} days till ${state.calendar.constraints.isPrepayment ? "prepayment" : "salary"}",
                       body: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -100,14 +101,15 @@ class _SalaryScreenState extends State<SalaryScreen> {
                           ),
                           const SizedBox(height: 12),
                           IncomeCard(
-                            emphasized: state.calendar.isPrepayment,
+                            emphasized: state.calendar.constraints.isPrepayment,
                             title: "Prepayment",
                             income: state.calculation.prepayment,
                             fractionDigits: 2,
                           ),
                           const SizedBox(height: 12),
                           IncomeCard(
-                            emphasized: !state.calendar.isPrepayment,
+                            emphasized:
+                                !state.calendar.constraints.isPrepayment,
                             title: "Salary",
                             income: state.calculation.salary,
                             fractionDigits: 2,
