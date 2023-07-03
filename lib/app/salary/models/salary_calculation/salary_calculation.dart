@@ -11,6 +11,12 @@ class SalaryCalculation with _$SalaryCalculation {
     required double total,
     required double dayCost,
     required double hourCost,
+    required int daysLeft,
+    required List<DateTime> calendarRange,
+    required int salaryYear,
+    required int salaryMonth,
+    required int salaryLastDay,
+    required bool isPrepayment,
   }) = _SalaryCalculation;
 
   factory SalaryCalculation.fromJson(Map<String, dynamic> json) =>

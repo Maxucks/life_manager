@@ -25,6 +25,12 @@ mixin _$SalaryCalculation {
   double get total => throw _privateConstructorUsedError;
   double get dayCost => throw _privateConstructorUsedError;
   double get hourCost => throw _privateConstructorUsedError;
+  int get daysLeft => throw _privateConstructorUsedError;
+  List<DateTime> get calendarRange => throw _privateConstructorUsedError;
+  int get salaryYear => throw _privateConstructorUsedError;
+  int get salaryMonth => throw _privateConstructorUsedError;
+  int get salaryLastDay => throw _privateConstructorUsedError;
+  bool get isPrepayment => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +49,13 @@ abstract class $SalaryCalculationCopyWith<$Res> {
       double salary,
       double total,
       double dayCost,
-      double hourCost});
+      double hourCost,
+      int daysLeft,
+      List<DateTime> calendarRange,
+      int salaryYear,
+      int salaryMonth,
+      int salaryLastDay,
+      bool isPrepayment});
 }
 
 /// @nodoc
@@ -64,6 +76,12 @@ class _$SalaryCalculationCopyWithImpl<$Res, $Val extends SalaryCalculation>
     Object? total = null,
     Object? dayCost = null,
     Object? hourCost = null,
+    Object? daysLeft = null,
+    Object? calendarRange = null,
+    Object? salaryYear = null,
+    Object? salaryMonth = null,
+    Object? salaryLastDay = null,
+    Object? isPrepayment = null,
   }) {
     return _then(_value.copyWith(
       prepayment: null == prepayment
@@ -86,6 +104,30 @@ class _$SalaryCalculationCopyWithImpl<$Res, $Val extends SalaryCalculation>
           ? _value.hourCost
           : hourCost // ignore: cast_nullable_to_non_nullable
               as double,
+      daysLeft: null == daysLeft
+          ? _value.daysLeft
+          : daysLeft // ignore: cast_nullable_to_non_nullable
+              as int,
+      calendarRange: null == calendarRange
+          ? _value.calendarRange
+          : calendarRange // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
+      salaryYear: null == salaryYear
+          ? _value.salaryYear
+          : salaryYear // ignore: cast_nullable_to_non_nullable
+              as int,
+      salaryMonth: null == salaryMonth
+          ? _value.salaryMonth
+          : salaryMonth // ignore: cast_nullable_to_non_nullable
+              as int,
+      salaryLastDay: null == salaryLastDay
+          ? _value.salaryLastDay
+          : salaryLastDay // ignore: cast_nullable_to_non_nullable
+              as int,
+      isPrepayment: null == isPrepayment
+          ? _value.isPrepayment
+          : isPrepayment // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -103,7 +145,13 @@ abstract class _$$_SalaryCalculationCopyWith<$Res>
       double salary,
       double total,
       double dayCost,
-      double hourCost});
+      double hourCost,
+      int daysLeft,
+      List<DateTime> calendarRange,
+      int salaryYear,
+      int salaryMonth,
+      int salaryLastDay,
+      bool isPrepayment});
 }
 
 /// @nodoc
@@ -122,6 +170,12 @@ class __$$_SalaryCalculationCopyWithImpl<$Res>
     Object? total = null,
     Object? dayCost = null,
     Object? hourCost = null,
+    Object? daysLeft = null,
+    Object? calendarRange = null,
+    Object? salaryYear = null,
+    Object? salaryMonth = null,
+    Object? salaryLastDay = null,
+    Object? isPrepayment = null,
   }) {
     return _then(_$_SalaryCalculation(
       prepayment: null == prepayment
@@ -144,6 +198,30 @@ class __$$_SalaryCalculationCopyWithImpl<$Res>
           ? _value.hourCost
           : hourCost // ignore: cast_nullable_to_non_nullable
               as double,
+      daysLeft: null == daysLeft
+          ? _value.daysLeft
+          : daysLeft // ignore: cast_nullable_to_non_nullable
+              as int,
+      calendarRange: null == calendarRange
+          ? _value._calendarRange
+          : calendarRange // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
+      salaryYear: null == salaryYear
+          ? _value.salaryYear
+          : salaryYear // ignore: cast_nullable_to_non_nullable
+              as int,
+      salaryMonth: null == salaryMonth
+          ? _value.salaryMonth
+          : salaryMonth // ignore: cast_nullable_to_non_nullable
+              as int,
+      salaryLastDay: null == salaryLastDay
+          ? _value.salaryLastDay
+          : salaryLastDay // ignore: cast_nullable_to_non_nullable
+              as int,
+      isPrepayment: null == isPrepayment
+          ? _value.isPrepayment
+          : isPrepayment // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -156,7 +234,14 @@ class _$_SalaryCalculation implements _SalaryCalculation {
       required this.salary,
       required this.total,
       required this.dayCost,
-      required this.hourCost});
+      required this.hourCost,
+      required this.daysLeft,
+      required final List<DateTime> calendarRange,
+      required this.salaryYear,
+      required this.salaryMonth,
+      required this.salaryLastDay,
+      required this.isPrepayment})
+      : _calendarRange = calendarRange;
 
   factory _$_SalaryCalculation.fromJson(Map<String, dynamic> json) =>
       _$$_SalaryCalculationFromJson(json);
@@ -171,10 +256,28 @@ class _$_SalaryCalculation implements _SalaryCalculation {
   final double dayCost;
   @override
   final double hourCost;
+  @override
+  final int daysLeft;
+  final List<DateTime> _calendarRange;
+  @override
+  List<DateTime> get calendarRange {
+    if (_calendarRange is EqualUnmodifiableListView) return _calendarRange;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_calendarRange);
+  }
+
+  @override
+  final int salaryYear;
+  @override
+  final int salaryMonth;
+  @override
+  final int salaryLastDay;
+  @override
+  final bool isPrepayment;
 
   @override
   String toString() {
-    return 'SalaryCalculation(prepayment: $prepayment, salary: $salary, total: $total, dayCost: $dayCost, hourCost: $hourCost)';
+    return 'SalaryCalculation(prepayment: $prepayment, salary: $salary, total: $total, dayCost: $dayCost, hourCost: $hourCost, daysLeft: $daysLeft, calendarRange: $calendarRange, salaryYear: $salaryYear, salaryMonth: $salaryMonth, salaryLastDay: $salaryLastDay, isPrepayment: $isPrepayment)';
   }
 
   @override
@@ -188,13 +291,36 @@ class _$_SalaryCalculation implements _SalaryCalculation {
             (identical(other.total, total) || other.total == total) &&
             (identical(other.dayCost, dayCost) || other.dayCost == dayCost) &&
             (identical(other.hourCost, hourCost) ||
-                other.hourCost == hourCost));
+                other.hourCost == hourCost) &&
+            (identical(other.daysLeft, daysLeft) ||
+                other.daysLeft == daysLeft) &&
+            const DeepCollectionEquality()
+                .equals(other._calendarRange, _calendarRange) &&
+            (identical(other.salaryYear, salaryYear) ||
+                other.salaryYear == salaryYear) &&
+            (identical(other.salaryMonth, salaryMonth) ||
+                other.salaryMonth == salaryMonth) &&
+            (identical(other.salaryLastDay, salaryLastDay) ||
+                other.salaryLastDay == salaryLastDay) &&
+            (identical(other.isPrepayment, isPrepayment) ||
+                other.isPrepayment == isPrepayment));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, prepayment, salary, total, dayCost, hourCost);
+  int get hashCode => Object.hash(
+      runtimeType,
+      prepayment,
+      salary,
+      total,
+      dayCost,
+      hourCost,
+      daysLeft,
+      const DeepCollectionEquality().hash(_calendarRange),
+      salaryYear,
+      salaryMonth,
+      salaryLastDay,
+      isPrepayment);
 
   @JsonKey(ignore: true)
   @override
@@ -217,7 +343,13 @@ abstract class _SalaryCalculation implements SalaryCalculation {
       required final double salary,
       required final double total,
       required final double dayCost,
-      required final double hourCost}) = _$_SalaryCalculation;
+      required final double hourCost,
+      required final int daysLeft,
+      required final List<DateTime> calendarRange,
+      required final int salaryYear,
+      required final int salaryMonth,
+      required final int salaryLastDay,
+      required final bool isPrepayment}) = _$_SalaryCalculation;
 
   factory _SalaryCalculation.fromJson(Map<String, dynamic> json) =
       _$_SalaryCalculation.fromJson;
@@ -232,6 +364,18 @@ abstract class _SalaryCalculation implements SalaryCalculation {
   double get dayCost;
   @override
   double get hourCost;
+  @override
+  int get daysLeft;
+  @override
+  List<DateTime> get calendarRange;
+  @override
+  int get salaryYear;
+  @override
+  int get salaryMonth;
+  @override
+  int get salaryLastDay;
+  @override
+  bool get isPrepayment;
   @override
   @JsonKey(ignore: true)
   _$$_SalaryCalculationCopyWith<_$_SalaryCalculation> get copyWith =>

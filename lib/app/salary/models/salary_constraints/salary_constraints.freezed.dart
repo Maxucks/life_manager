@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'salary_config.dart';
+part of 'salary_constraints.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-SalaryConfig _$SalaryConfigFromJson(Map<String, dynamic> json) {
-  return _SalaryConfig.fromJson(json);
+SalaryConstraints _$SalaryConstraintsFromJson(Map<String, dynamic> json) {
+  return _SalaryConstraints.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SalaryConfig {
+mixin _$SalaryConstraints {
   double get rate => throw _privateConstructorUsedError;
   Set<int> get weekends => throw _privateConstructorUsedError;
   List<DateTime> get holidays => throw _privateConstructorUsedError;
@@ -30,15 +30,15 @@ mixin _$SalaryConfig {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SalaryConfigCopyWith<SalaryConfig> get copyWith =>
+  $SalaryConstraintsCopyWith<SalaryConstraints> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SalaryConfigCopyWith<$Res> {
-  factory $SalaryConfigCopyWith(
-          SalaryConfig value, $Res Function(SalaryConfig) then) =
-      _$SalaryConfigCopyWithImpl<$Res, SalaryConfig>;
+abstract class $SalaryConstraintsCopyWith<$Res> {
+  factory $SalaryConstraintsCopyWith(
+          SalaryConstraints value, $Res Function(SalaryConstraints) then) =
+      _$SalaryConstraintsCopyWithImpl<$Res, SalaryConstraints>;
   @useResult
   $Res call(
       {double rate,
@@ -51,9 +51,9 @@ abstract class $SalaryConfigCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SalaryConfigCopyWithImpl<$Res, $Val extends SalaryConfig>
-    implements $SalaryConfigCopyWith<$Res> {
-  _$SalaryConfigCopyWithImpl(this._value, this._then);
+class _$SalaryConstraintsCopyWithImpl<$Res, $Val extends SalaryConstraints>
+    implements $SalaryConstraintsCopyWith<$Res> {
+  _$SalaryConstraintsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -105,11 +105,11 @@ class _$SalaryConfigCopyWithImpl<$Res, $Val extends SalaryConfig>
 }
 
 /// @nodoc
-abstract class _$$_SalaryConfigCopyWith<$Res>
-    implements $SalaryConfigCopyWith<$Res> {
-  factory _$$_SalaryConfigCopyWith(
-          _$_SalaryConfig value, $Res Function(_$_SalaryConfig) then) =
-      __$$_SalaryConfigCopyWithImpl<$Res>;
+abstract class _$$_SalaryConstraintsCopyWith<$Res>
+    implements $SalaryConstraintsCopyWith<$Res> {
+  factory _$$_SalaryConstraintsCopyWith(_$_SalaryConstraints value,
+          $Res Function(_$_SalaryConstraints) then) =
+      __$$_SalaryConstraintsCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,11 +123,11 @@ abstract class _$$_SalaryConfigCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SalaryConfigCopyWithImpl<$Res>
-    extends _$SalaryConfigCopyWithImpl<$Res, _$_SalaryConfig>
-    implements _$$_SalaryConfigCopyWith<$Res> {
-  __$$_SalaryConfigCopyWithImpl(
-      _$_SalaryConfig _value, $Res Function(_$_SalaryConfig) _then)
+class __$$_SalaryConstraintsCopyWithImpl<$Res>
+    extends _$SalaryConstraintsCopyWithImpl<$Res, _$_SalaryConstraints>
+    implements _$$_SalaryConstraintsCopyWith<$Res> {
+  __$$_SalaryConstraintsCopyWithImpl(
+      _$_SalaryConstraints _value, $Res Function(_$_SalaryConstraints) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +141,7 @@ class __$$_SalaryConfigCopyWithImpl<$Res>
     Object? middleDay = null,
     Object? boundaries = null,
   }) {
-    return _then(_$_SalaryConfig(
+    return _then(_$_SalaryConstraints(
       rate: null == rate
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
@@ -176,8 +176,8 @@ class __$$_SalaryConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SalaryConfig implements _SalaryConfig {
-  const _$_SalaryConfig(
+class _$_SalaryConstraints implements _SalaryConstraints {
+  const _$_SalaryConstraints(
       {required this.rate,
       required final Set<int> weekends,
       required final List<DateTime> holidays,
@@ -188,8 +188,8 @@ class _$_SalaryConfig implements _SalaryConfig {
       : _weekends = weekends,
         _holidays = holidays;
 
-  factory _$_SalaryConfig.fromJson(Map<String, dynamic> json) =>
-      _$$_SalaryConfigFromJson(json);
+  factory _$_SalaryConstraints.fromJson(Map<String, dynamic> json) =>
+      _$$_SalaryConstraintsFromJson(json);
 
   @override
   final double rate;
@@ -220,14 +220,14 @@ class _$_SalaryConfig implements _SalaryConfig {
 
   @override
   String toString() {
-    return 'SalaryConfig(rate: $rate, weekends: $weekends, holidays: $holidays, hpdContract: $hpdContract, hpdNorm: $hpdNorm, middleDay: $middleDay, boundaries: $boundaries)';
+    return 'SalaryConstraints(rate: $rate, weekends: $weekends, holidays: $holidays, hpdContract: $hpdContract, hpdNorm: $hpdNorm, middleDay: $middleDay, boundaries: $boundaries)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SalaryConfig &&
+            other is _$_SalaryConstraints &&
             (identical(other.rate, rate) || other.rate == rate) &&
             const DeepCollectionEquality().equals(other._weekends, _weekends) &&
             const DeepCollectionEquality().equals(other._holidays, _holidays) &&
@@ -255,29 +255,30 @@ class _$_SalaryConfig implements _SalaryConfig {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SalaryConfigCopyWith<_$_SalaryConfig> get copyWith =>
-      __$$_SalaryConfigCopyWithImpl<_$_SalaryConfig>(this, _$identity);
+  _$$_SalaryConstraintsCopyWith<_$_SalaryConstraints> get copyWith =>
+      __$$_SalaryConstraintsCopyWithImpl<_$_SalaryConstraints>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SalaryConfigToJson(
+    return _$$_SalaryConstraintsToJson(
       this,
     );
   }
 }
 
-abstract class _SalaryConfig implements SalaryConfig {
-  const factory _SalaryConfig(
+abstract class _SalaryConstraints implements SalaryConstraints {
+  const factory _SalaryConstraints(
       {required final double rate,
       required final Set<int> weekends,
       required final List<DateTime> holidays,
       required final int hpdContract,
       required final int hpdNorm,
       required final int middleDay,
-      required final (int, int) boundaries}) = _$_SalaryConfig;
+      required final (int, int) boundaries}) = _$_SalaryConstraints;
 
-  factory _SalaryConfig.fromJson(Map<String, dynamic> json) =
-      _$_SalaryConfig.fromJson;
+  factory _SalaryConstraints.fromJson(Map<String, dynamic> json) =
+      _$_SalaryConstraints.fromJson;
 
   @override
   double get rate;
@@ -295,6 +296,6 @@ abstract class _SalaryConfig implements SalaryConfig {
   (int, int) get boundaries;
   @override
   @JsonKey(ignore: true)
-  _$$_SalaryConfigCopyWith<_$_SalaryConfig> get copyWith =>
+  _$$_SalaryConstraintsCopyWith<_$_SalaryConstraints> get copyWith =>
       throw _privateConstructorUsedError;
 }

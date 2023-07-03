@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'salary_config.dart';
+part of 'salary_constraints.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SalaryConfig _$$_SalaryConfigFromJson(Map<String, dynamic> json) =>
-    _$_SalaryConfig(
+_$_SalaryConstraints _$$_SalaryConstraintsFromJson(Map<String, dynamic> json) =>
+    _$_SalaryConstraints(
       rate: (json['rate'] as num).toDouble(),
       weekends:
           (json['weekends'] as List<dynamic>).map((e) => e as int).toSet(),
@@ -26,7 +26,8 @@ _$_SalaryConfig _$$_SalaryConfigFromJson(Map<String, dynamic> json) =>
       ),
     );
 
-Map<String, dynamic> _$$_SalaryConfigToJson(_$_SalaryConfig instance) =>
+Map<String, dynamic> _$$_SalaryConstraintsToJson(
+        _$_SalaryConstraints instance) =>
     <String, dynamic>{
       'rate': instance.rate,
       'weekends': instance.weekends.toList(),

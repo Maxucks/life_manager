@@ -20,9 +20,9 @@ SalaryState _$SalaryStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SalaryState {
+  DateTime get currentDate => throw _privateConstructorUsedError;
+  SalaryConstraints get constraints => throw _privateConstructorUsedError;
   SalaryCalculation get calculation => throw _privateConstructorUsedError;
-  SalaryConfig get config => throw _privateConstructorUsedError;
-  CalendarConfig get calendar => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,13 +37,12 @@ abstract class $SalaryStateCopyWith<$Res> {
       _$SalaryStateCopyWithImpl<$Res, SalaryState>;
   @useResult
   $Res call(
-      {SalaryCalculation calculation,
-      SalaryConfig config,
-      CalendarConfig calendar});
+      {DateTime currentDate,
+      SalaryConstraints constraints,
+      SalaryCalculation calculation});
 
+  $SalaryConstraintsCopyWith<$Res> get constraints;
   $SalaryCalculationCopyWith<$Res> get calculation;
-  $SalaryConfigCopyWith<$Res> get config;
-  $CalendarConfigCopyWith<$Res> get calendar;
 }
 
 /// @nodoc
@@ -59,24 +58,32 @@ class _$SalaryStateCopyWithImpl<$Res, $Val extends SalaryState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currentDate = null,
+    Object? constraints = null,
     Object? calculation = null,
-    Object? config = null,
-    Object? calendar = null,
   }) {
     return _then(_value.copyWith(
+      currentDate: null == currentDate
+          ? _value.currentDate
+          : currentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as SalaryConstraints,
       calculation: null == calculation
           ? _value.calculation
           : calculation // ignore: cast_nullable_to_non_nullable
               as SalaryCalculation,
-      config: null == config
-          ? _value.config
-          : config // ignore: cast_nullable_to_non_nullable
-              as SalaryConfig,
-      calendar: null == calendar
-          ? _value.calendar
-          : calendar // ignore: cast_nullable_to_non_nullable
-              as CalendarConfig,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SalaryConstraintsCopyWith<$Res> get constraints {
+    return $SalaryConstraintsCopyWith<$Res>(_value.constraints, (value) {
+      return _then(_value.copyWith(constraints: value) as $Val);
+    });
   }
 
   @override
@@ -84,22 +91,6 @@ class _$SalaryStateCopyWithImpl<$Res, $Val extends SalaryState>
   $SalaryCalculationCopyWith<$Res> get calculation {
     return $SalaryCalculationCopyWith<$Res>(_value.calculation, (value) {
       return _then(_value.copyWith(calculation: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $SalaryConfigCopyWith<$Res> get config {
-    return $SalaryConfigCopyWith<$Res>(_value.config, (value) {
-      return _then(_value.copyWith(config: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CalendarConfigCopyWith<$Res> get calendar {
-    return $CalendarConfigCopyWith<$Res>(_value.calendar, (value) {
-      return _then(_value.copyWith(calendar: value) as $Val);
     });
   }
 }
@@ -113,16 +104,14 @@ abstract class _$$_SalaryStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {SalaryCalculation calculation,
-      SalaryConfig config,
-      CalendarConfig calendar});
+      {DateTime currentDate,
+      SalaryConstraints constraints,
+      SalaryCalculation calculation});
 
   @override
+  $SalaryConstraintsCopyWith<$Res> get constraints;
+  @override
   $SalaryCalculationCopyWith<$Res> get calculation;
-  @override
-  $SalaryConfigCopyWith<$Res> get config;
-  @override
-  $CalendarConfigCopyWith<$Res> get calendar;
 }
 
 /// @nodoc
@@ -136,23 +125,23 @@ class __$$_SalaryStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currentDate = null,
+    Object? constraints = null,
     Object? calculation = null,
-    Object? config = null,
-    Object? calendar = null,
   }) {
     return _then(_$_SalaryState(
+      currentDate: null == currentDate
+          ? _value.currentDate
+          : currentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      constraints: null == constraints
+          ? _value.constraints
+          : constraints // ignore: cast_nullable_to_non_nullable
+              as SalaryConstraints,
       calculation: null == calculation
           ? _value.calculation
           : calculation // ignore: cast_nullable_to_non_nullable
               as SalaryCalculation,
-      config: null == config
-          ? _value.config
-          : config // ignore: cast_nullable_to_non_nullable
-              as SalaryConfig,
-      calendar: null == calendar
-          ? _value.calendar
-          : calendar // ignore: cast_nullable_to_non_nullable
-              as CalendarConfig,
     ));
   }
 }
@@ -161,23 +150,23 @@ class __$$_SalaryStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SalaryState implements _SalaryState {
   const _$_SalaryState(
-      {required this.calculation,
-      required this.config,
-      required this.calendar});
+      {required this.currentDate,
+      required this.constraints,
+      required this.calculation});
 
   factory _$_SalaryState.fromJson(Map<String, dynamic> json) =>
       _$$_SalaryStateFromJson(json);
 
   @override
+  final DateTime currentDate;
+  @override
+  final SalaryConstraints constraints;
+  @override
   final SalaryCalculation calculation;
-  @override
-  final SalaryConfig config;
-  @override
-  final CalendarConfig calendar;
 
   @override
   String toString() {
-    return 'SalaryState(calculation: $calculation, config: $config, calendar: $calendar)';
+    return 'SalaryState(currentDate: $currentDate, constraints: $constraints, calculation: $calculation)';
   }
 
   @override
@@ -185,16 +174,18 @@ class _$_SalaryState implements _SalaryState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SalaryState &&
+            (identical(other.currentDate, currentDate) ||
+                other.currentDate == currentDate) &&
+            (identical(other.constraints, constraints) ||
+                other.constraints == constraints) &&
             (identical(other.calculation, calculation) ||
-                other.calculation == calculation) &&
-            (identical(other.config, config) || other.config == config) &&
-            (identical(other.calendar, calendar) ||
-                other.calendar == calendar));
+                other.calculation == calculation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, calculation, config, calendar);
+  int get hashCode =>
+      Object.hash(runtimeType, currentDate, constraints, calculation);
 
   @JsonKey(ignore: true)
   @override
@@ -212,19 +203,19 @@ class _$_SalaryState implements _SalaryState {
 
 abstract class _SalaryState implements SalaryState {
   const factory _SalaryState(
-      {required final SalaryCalculation calculation,
-      required final SalaryConfig config,
-      required final CalendarConfig calendar}) = _$_SalaryState;
+      {required final DateTime currentDate,
+      required final SalaryConstraints constraints,
+      required final SalaryCalculation calculation}) = _$_SalaryState;
 
   factory _SalaryState.fromJson(Map<String, dynamic> json) =
       _$_SalaryState.fromJson;
 
   @override
+  DateTime get currentDate;
+  @override
+  SalaryConstraints get constraints;
+  @override
   SalaryCalculation get calculation;
-  @override
-  SalaryConfig get config;
-  @override
-  CalendarConfig get calendar;
   @override
   @JsonKey(ignore: true)
   _$$_SalaryStateCopyWith<_$_SalaryState> get copyWith =>
