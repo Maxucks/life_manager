@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/salary/screens/salary_screen.dart';
+import 'package:life_manager/app/salary/ui/screens/salary_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

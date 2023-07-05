@@ -21,8 +21,8 @@ SalaryState _$SalaryStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SalaryState {
   DateTime get currentDate => throw _privateConstructorUsedError;
-  SalaryConstraints get constraints => throw _privateConstructorUsedError;
-  SalaryCalculation get calculation => throw _privateConstructorUsedError;
+  SalaryConstraints? get constraints => throw _privateConstructorUsedError;
+  SalaryCalculation? get calculation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +38,11 @@ abstract class $SalaryStateCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime currentDate,
-      SalaryConstraints constraints,
-      SalaryCalculation calculation});
+      SalaryConstraints? constraints,
+      SalaryCalculation? calculation});
 
-  $SalaryConstraintsCopyWith<$Res> get constraints;
-  $SalaryCalculationCopyWith<$Res> get calculation;
+  $SalaryConstraintsCopyWith<$Res>? get constraints;
+  $SalaryCalculationCopyWith<$Res>? get calculation;
 }
 
 /// @nodoc
@@ -59,37 +59,45 @@ class _$SalaryStateCopyWithImpl<$Res, $Val extends SalaryState>
   @override
   $Res call({
     Object? currentDate = null,
-    Object? constraints = null,
-    Object? calculation = null,
+    Object? constraints = freezed,
+    Object? calculation = freezed,
   }) {
     return _then(_value.copyWith(
       currentDate: null == currentDate
           ? _value.currentDate
           : currentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      constraints: null == constraints
+      constraints: freezed == constraints
           ? _value.constraints
           : constraints // ignore: cast_nullable_to_non_nullable
-              as SalaryConstraints,
-      calculation: null == calculation
+              as SalaryConstraints?,
+      calculation: freezed == calculation
           ? _value.calculation
           : calculation // ignore: cast_nullable_to_non_nullable
-              as SalaryCalculation,
+              as SalaryCalculation?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $SalaryConstraintsCopyWith<$Res> get constraints {
-    return $SalaryConstraintsCopyWith<$Res>(_value.constraints, (value) {
+  $SalaryConstraintsCopyWith<$Res>? get constraints {
+    if (_value.constraints == null) {
+      return null;
+    }
+
+    return $SalaryConstraintsCopyWith<$Res>(_value.constraints!, (value) {
       return _then(_value.copyWith(constraints: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $SalaryCalculationCopyWith<$Res> get calculation {
-    return $SalaryCalculationCopyWith<$Res>(_value.calculation, (value) {
+  $SalaryCalculationCopyWith<$Res>? get calculation {
+    if (_value.calculation == null) {
+      return null;
+    }
+
+    return $SalaryCalculationCopyWith<$Res>(_value.calculation!, (value) {
       return _then(_value.copyWith(calculation: value) as $Val);
     });
   }
@@ -105,13 +113,13 @@ abstract class _$$_SalaryStateCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime currentDate,
-      SalaryConstraints constraints,
-      SalaryCalculation calculation});
+      SalaryConstraints? constraints,
+      SalaryCalculation? calculation});
 
   @override
-  $SalaryConstraintsCopyWith<$Res> get constraints;
+  $SalaryConstraintsCopyWith<$Res>? get constraints;
   @override
-  $SalaryCalculationCopyWith<$Res> get calculation;
+  $SalaryCalculationCopyWith<$Res>? get calculation;
 }
 
 /// @nodoc
@@ -126,22 +134,22 @@ class __$$_SalaryStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentDate = null,
-    Object? constraints = null,
-    Object? calculation = null,
+    Object? constraints = freezed,
+    Object? calculation = freezed,
   }) {
     return _then(_$_SalaryState(
       currentDate: null == currentDate
           ? _value.currentDate
           : currentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      constraints: null == constraints
+      constraints: freezed == constraints
           ? _value.constraints
           : constraints // ignore: cast_nullable_to_non_nullable
-              as SalaryConstraints,
-      calculation: null == calculation
+              as SalaryConstraints?,
+      calculation: freezed == calculation
           ? _value.calculation
           : calculation // ignore: cast_nullable_to_non_nullable
-              as SalaryCalculation,
+              as SalaryCalculation?,
     ));
   }
 }
@@ -150,9 +158,7 @@ class __$$_SalaryStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SalaryState implements _SalaryState {
   const _$_SalaryState(
-      {required this.currentDate,
-      required this.constraints,
-      required this.calculation});
+      {required this.currentDate, this.constraints, this.calculation});
 
   factory _$_SalaryState.fromJson(Map<String, dynamic> json) =>
       _$$_SalaryStateFromJson(json);
@@ -160,9 +166,9 @@ class _$_SalaryState implements _SalaryState {
   @override
   final DateTime currentDate;
   @override
-  final SalaryConstraints constraints;
+  final SalaryConstraints? constraints;
   @override
-  final SalaryCalculation calculation;
+  final SalaryCalculation? calculation;
 
   @override
   String toString() {
@@ -204,8 +210,8 @@ class _$_SalaryState implements _SalaryState {
 abstract class _SalaryState implements SalaryState {
   const factory _SalaryState(
       {required final DateTime currentDate,
-      required final SalaryConstraints constraints,
-      required final SalaryCalculation calculation}) = _$_SalaryState;
+      final SalaryConstraints? constraints,
+      final SalaryCalculation? calculation}) = _$_SalaryState;
 
   factory _SalaryState.fromJson(Map<String, dynamic> json) =
       _$_SalaryState.fromJson;
@@ -213,9 +219,9 @@ abstract class _SalaryState implements SalaryState {
   @override
   DateTime get currentDate;
   @override
-  SalaryConstraints get constraints;
+  SalaryConstraints? get constraints;
   @override
-  SalaryCalculation get calculation;
+  SalaryCalculation? get calculation;
   @override
   @JsonKey(ignore: true)
   _$$_SalaryStateCopyWith<_$_SalaryState> get copyWith =>

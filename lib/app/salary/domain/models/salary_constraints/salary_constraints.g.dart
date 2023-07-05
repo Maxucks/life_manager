@@ -13,7 +13,7 @@ _$_SalaryConstraints _$$_SalaryConstraintsFromJson(Map<String, dynamic> json) =>
           (json['weekends'] as List<dynamic>).map((e) => e as int).toSet(),
       holidays: (json['holidays'] as List<dynamic>)
           .map((e) => DateTime.parse(e as String))
-          .toList(),
+          .toSet(),
       hpdContract: json['hpdContract'] as int,
       hpdNorm: json['hpdNorm'] as int,
       middleDay: json['middleDay'] as int,

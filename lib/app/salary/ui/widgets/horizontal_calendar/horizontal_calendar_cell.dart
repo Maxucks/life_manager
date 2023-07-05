@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:life_manager/app/core/utils/constants.dart';
-import 'package:life_manager/app/salary/widgets/calendar_cell_card.dart';
+import 'package:life_manager/app/salary/ui/widgets/calendar_cell_card.dart';
 
 class HorizontalCalendarCell extends StatelessWidget {
   const HorizontalCalendarCell({

@@ -1,6 +1,7 @@
 import 'package:life_manager/app/core/utils/date_time_utils.dart';
-import 'package:life_manager/app/salary/models/salary_calculation/salary_calculation.dart';
-import 'package:life_manager/app/salary/models/salary_constraints/salary_constraints.dart';
+import 'package:life_manager/app/salary/application/services/salary_repository.dart';
+import 'package:life_manager/app/salary/domain/models/salary_calculation/salary_calculation.dart';
+import 'package:life_manager/app/salary/domain/models/salary_constraints/salary_constraints.dart';
 import 'package:life_manager/app/salary/utils/tax_calculator.dart';
 
 typedef CalendarBoundaries = (int x, int y);
@@ -8,48 +9,52 @@ typedef CalendarRange = List<DateTime>;
 
 class SalaryService {
   const SalaryService({
+    required this.repo,
     required this.taxCalculator,
   });
 
+  final SalaryRepository repo;
   final TaxCalculator taxCalculator;
 
-  // TODO: implement
-  Set<int> updateWeekends(Set<int>? weekends) {
+  Future<SalaryConstraints> getConstraints() {
+    return repo.loadConstraints();
+  }
+
+  Set<int> updateWeekends(Set<int>? weekends, SalaryConstraints constraints) {
     if (weekends != null) {
-      return {...weekends};
+      final updatedWeekends = {...weekends};
+
+      final updatedConstraints = constraints.copyWith(
+        weekends: updatedWeekends,
+      );
+      repo.saveConstraints(updatedConstraints);
+
+      return updatedWeekends;
     }
 
-    final constraints = getConstraints();
     return constraints.weekends;
   }
 
-  // TODO: implement
-  List<DateTime> toggleHoliday(DateTime date) {
-    final constraints = getConstraints();
-
+  Set<DateTime> toggleHoliday(DateTime date, SalaryConstraints constraints) {
     final weekends = constraints.weekends;
-    final holidays = constraints.holidays;
 
+    final updatedHolidays = {...constraints.holidays};
     if (!weekends.contains(date.weekday)) {
-      return holidays.contains(date)
-          ? holidays.where((h) => h != date).toList()
-          : [...holidays, date];
+      if (updatedHolidays.contains(date)) {
+        updatedHolidays.remove(date);
+      } else {
+        updatedHolidays.add(date);
+      }
+
+      final updatedConstraints = constraints.copyWith(
+        holidays: updatedHolidays,
+      );
+      repo.saveConstraints(updatedConstraints);
+
+      return updatedHolidays;
     }
 
     return constraints.holidays;
-  }
-
-  // TODO: Get constraints from shared prefs
-  SalaryConstraints getConstraints() {
-    return const SalaryConstraints(
-      rate: 137950,
-      weekends: {DateTime.saturday, DateTime.sunday},
-      holidays: [],
-      hpdContract: 7,
-      hpdNorm: 8,
-      middleDay: 15,
-      boundaries: (10, 25),
-    );
   }
 
   SalaryCalculation getSalary(DateTime date, SalaryConstraints constraints) {
@@ -60,7 +65,7 @@ class SalaryService {
     // Calendar section
     final calendarRange = _createRangeFromBoundaries(
       c: constraints,
-      isPrepayment: isPrepayment,
+      // isPrepayment: isPrepayment,
       salaryMonth: salaryMonth,
       salaryYear: salaryYear,
       salaryMonthDays: salaryLastDay,
@@ -118,25 +123,43 @@ class SalaryService {
   CalendarRange _createRangeFromBoundaries({
     required int salaryYear,
     required int salaryMonth,
-    required bool isPrepayment,
     required int salaryMonthDays,
     required SalaryConstraints c,
+    bool? isPrepayment,
   }) {
-    if (isPrepayment) {
-      return [
-        for (int day = 1; day <= c.boundaries.$2; day++)
-          DateTime(salaryYear, salaryMonth, day),
-      ];
-    } else {
-      return [
-        for (int day = c.middleDay + 1; day <= salaryMonthDays; day++)
-          DateTime(salaryYear, salaryMonth, day),
+    // TODO: Refactor
+    // if (isPrepayment != null) {
+    //   if (isPrepayment) {
+    //     return [
+    //       for (int day = 1; day <= c.boundaries.$2; day++)
+    //         DateTime(salaryYear, salaryMonth, day),
+    //     ];
+    //   } else {
+    //     return [
+    //       for (int day = c.middleDay + 1; day <= salaryMonthDays; day++)
+    //         DateTime(salaryYear, salaryMonth, day),
+    //       for (int day = 1; day <= c.boundaries.$1; day++)
+    //         salaryMonth < 12
+    //             ? DateTime(salaryYear, salaryMonth + 1, day)
+    //             : DateTime(salaryYear + 1, 1, day),
+    //     ];
+    //   }
+    // }
+    final (startDay, endDay) = isPrepayment == null
+        ? (1, salaryMonthDays)
+        : isPrepayment
+            ? (1, c.boundaries.$2)
+            : (c.middleDay + 1, salaryMonthDays);
+
+    return [
+      for (int day = startDay; day <= endDay; day++)
+        DateTime(salaryYear, salaryMonth, day),
+      if (isPrepayment == null || !isPrepayment)
         for (int day = 1; day <= c.boundaries.$1; day++)
           salaryMonth < 12
               ? DateTime(salaryYear, salaryMonth + 1, day)
               : DateTime(salaryYear + 1, 1, day),
-      ];
-    }
+    ];
   }
 
   /// Calculates total salary value without taxes

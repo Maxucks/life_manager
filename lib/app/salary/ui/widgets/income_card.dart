@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:life_manager/app/core/utils/constants.dart';
-import 'package:life_manager/app/salary/widgets/info_card.dart';
+import 'package:life_manager/app/salary/ui/widgets/info_card.dart';
 
 enum IncomeCardType { income, info }
 

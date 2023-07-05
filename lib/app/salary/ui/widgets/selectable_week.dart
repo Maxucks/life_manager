@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/salary/widgets/calendar_cell_card.dart';
+import 'package:life_manager/app/salary/ui/widgets/calendar_cell_card.dart';
 
 class SelectableWeek extends StatefulWidget {
   const SelectableWeek({

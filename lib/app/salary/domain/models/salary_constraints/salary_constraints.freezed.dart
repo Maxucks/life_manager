@@ -22,7 +22,7 @@ SalaryConstraints _$SalaryConstraintsFromJson(Map<String, dynamic> json) {
 mixin _$SalaryConstraints {
   double get rate => throw _privateConstructorUsedError;
   Set<int> get weekends => throw _privateConstructorUsedError;
-  List<DateTime> get holidays => throw _privateConstructorUsedError;
+  Set<DateTime> get holidays => throw _privateConstructorUsedError;
   int get hpdContract => throw _privateConstructorUsedError;
   int get hpdNorm => throw _privateConstructorUsedError;
   int get middleDay => throw _privateConstructorUsedError;
@@ -43,7 +43,7 @@ abstract class $SalaryConstraintsCopyWith<$Res> {
   $Res call(
       {double rate,
       Set<int> weekends,
-      List<DateTime> holidays,
+      Set<DateTime> holidays,
       int hpdContract,
       int hpdNorm,
       int middleDay,
@@ -83,7 +83,7 @@ class _$SalaryConstraintsCopyWithImpl<$Res, $Val extends SalaryConstraints>
       holidays: null == holidays
           ? _value.holidays
           : holidays // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
+              as Set<DateTime>,
       hpdContract: null == hpdContract
           ? _value.hpdContract
           : hpdContract // ignore: cast_nullable_to_non_nullable
@@ -115,7 +115,7 @@ abstract class _$$_SalaryConstraintsCopyWith<$Res>
   $Res call(
       {double rate,
       Set<int> weekends,
-      List<DateTime> holidays,
+      Set<DateTime> holidays,
       int hpdContract,
       int hpdNorm,
       int middleDay,
@@ -153,7 +153,7 @@ class __$$_SalaryConstraintsCopyWithImpl<$Res>
       holidays: null == holidays
           ? _value._holidays
           : holidays // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
+              as Set<DateTime>,
       hpdContract: null == hpdContract
           ? _value.hpdContract
           : hpdContract // ignore: cast_nullable_to_non_nullable
@@ -176,17 +176,18 @@ class __$$_SalaryConstraintsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SalaryConstraints implements _SalaryConstraints {
+class _$_SalaryConstraints extends _SalaryConstraints {
   const _$_SalaryConstraints(
       {required this.rate,
       required final Set<int> weekends,
-      required final List<DateTime> holidays,
+      required final Set<DateTime> holidays,
       required this.hpdContract,
       required this.hpdNorm,
       required this.middleDay,
       required this.boundaries})
       : _weekends = weekends,
-        _holidays = holidays;
+        _holidays = holidays,
+        super._();
 
   factory _$_SalaryConstraints.fromJson(Map<String, dynamic> json) =>
       _$$_SalaryConstraintsFromJson(json);
@@ -201,12 +202,12 @@ class _$_SalaryConstraints implements _SalaryConstraints {
     return EqualUnmodifiableSetView(_weekends);
   }
 
-  final List<DateTime> _holidays;
+  final Set<DateTime> _holidays;
   @override
-  List<DateTime> get holidays {
-    if (_holidays is EqualUnmodifiableListView) return _holidays;
+  Set<DateTime> get holidays {
+    if (_holidays is EqualUnmodifiableSetView) return _holidays;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_holidays);
+    return EqualUnmodifiableSetView(_holidays);
   }
 
   @override
@@ -267,15 +268,16 @@ class _$_SalaryConstraints implements _SalaryConstraints {
   }
 }
 
-abstract class _SalaryConstraints implements SalaryConstraints {
+abstract class _SalaryConstraints extends SalaryConstraints {
   const factory _SalaryConstraints(
       {required final double rate,
       required final Set<int> weekends,
-      required final List<DateTime> holidays,
+      required final Set<DateTime> holidays,
       required final int hpdContract,
       required final int hpdNorm,
       required final int middleDay,
       required final (int, int) boundaries}) = _$_SalaryConstraints;
+  const _SalaryConstraints._() : super._();
 
   factory _SalaryConstraints.fromJson(Map<String, dynamic> json) =
       _$_SalaryConstraints.fromJson;
@@ -285,7 +287,7 @@ abstract class _SalaryConstraints implements SalaryConstraints {
   @override
   Set<int> get weekends;
   @override
-  List<DateTime> get holidays;
+  Set<DateTime> get holidays;
   @override
   int get hpdContract;
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:life_manager/app/core/utils/constants.dart';
-import 'package:life_manager/app/salary/widgets/horizontal_calendar/horizontal_calendar_cell.dart';
+import 'package:life_manager/app/salary/ui/widgets/horizontal_calendar/horizontal_calendar_cell.dart';
 
 class HorizontalCalendar extends StatelessWidget {
   const HorizontalCalendar({
@@ -18,7 +18,7 @@ class HorizontalCalendar extends StatelessWidget {
   final List<DateTime> range;
 
   final Set<int>? weekends;
-  final List<DateTime>? holidays;
+  final Set<DateTime>? holidays;
 
   final bool Function(DateTime date)? whetherActive;
   final Function(DateTime date)? onDoubleTap;
@@ -62,7 +62,9 @@ class HorizontalCalendar extends StatelessWidget {
                 child: HorizontalCalendarCell(
                   maxSize: cellSize,
                   date: item,
-                  selected: item.day == date.day,
+                  selected: item.day == date.day &&
+                      item.month == date.month &&
+                      item.year == date.year,
                   active: active,
                   dot: hasDot,
                   textColor: textColorOverride,

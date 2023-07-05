@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_manager/app/core/utils/date_time_utils.dart';
-import 'package:life_manager/app/salary/blocs/salary/bloc.dart';
-import 'package:life_manager/app/salary/blocs/salary/events.dart';
-import 'package:life_manager/app/salary/blocs/salary/state.dart';
-import 'package:life_manager/app/salary/widgets/horizontal_calendar/horizontal_calendar.dart';
-import 'package:life_manager/app/salary/widgets/income_card.dart';
-import 'package:life_manager/app/salary/widgets/info_card.dart';
-import 'package:life_manager/app/salary/widgets/selectable_week.dart';
+import 'package:life_manager/app/salary/ui/blocs/salary/bloc.dart';
+import 'package:life_manager/app/salary/ui/blocs/salary/events.dart';
+import 'package:life_manager/app/salary/ui/blocs/salary/state.dart';
+import 'package:life_manager/app/salary/ui/widgets/horizontal_calendar/horizontal_calendar.dart';
+import 'package:life_manager/app/salary/ui/widgets/income_card.dart';
+import 'package:life_manager/app/salary/ui/widgets/info_card.dart';
+import 'package:life_manager/app/salary/ui/widgets/selectable_week.dart';
 
 class SalaryScreen extends StatefulWidget {
   const SalaryScreen({
@@ -39,21 +39,36 @@ class _SalaryScreenState extends State<SalaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SalaryBloc, SalaryState>(
-      builder: (context, state) {
-        final displayMonth = monthName(state.calculation.salaryMonth);
-        final displayYear = state.calculation.salaryYear;
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+      body: BlocBuilder<SalaryBloc, SalaryState>(
+        builder: (context, state) {
+          if (state.constraints == null) {
+            return const Center(
+              child: Text("Constraints are null"),
+            );
+          }
 
-        final isPrepayment = state.calculation.isPrepayment;
-        final displayDaysLeft = state.calculation.daysLeft;
-        final displayHalf = isPrepayment ? "prepayment" : "salary";
+          if (state.calculation == null) {
+            return const Center(
+              child: Text("Calculation is null"),
+            );
+          }
 
-        final displayHpdContract = state.constraints.hpdContract.toInt();
-        final displayHpdNorm = state.constraints.hpdContract.toInt();
+          final userInput = state.constraints!;
+          final output = state.calculation!;
 
-        return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-          body: CustomScrollView(
+          final displayMonth = monthName(output.salaryMonth);
+          final displayYear = output.salaryYear;
+
+          final isPrepayment = output.isPrepayment;
+          final displayDaysLeft = output.daysLeft;
+          final displayHalf = isPrepayment ? "prepayment" : "salary";
+
+          final displayHpdContract = userInput.hpdContract.toInt();
+          final displayHpdNorm = userInput.hpdNorm.toInt();
+
+          return CustomScrollView(
             slivers: [
               SliverList(
                 delegate: SliverChildListDelegate([
@@ -61,16 +76,15 @@ class _SalaryScreenState extends State<SalaryScreen> {
                   HorizontalCalendar(
                     onDoubleTap: _toggleHoliday,
                     date: state.currentDate,
-                    range: state.calculation.calendarRange,
-                    holidays: state.constraints.holidays,
-                    weekends: state.constraints.weekends,
+                    range: output.calendarRange,
+                    holidays: userInput.holidays,
+                    weekends: userInput.weekends,
                     whetherActive: (date) {
-                      final midDay = state.constraints.middleDay;
-                      final lastDay = state.calculation.salaryLastDay;
+                      final lastDay = output.salaryLastDay;
 
-                      return state.calculation.isPrepayment
-                          ? date.day <= midDay
-                          : date.day > midDay && date.day <= lastDay;
+                      return date.day <= lastDay &&
+                          date.month == output.salaryMonth &&
+                          date.year == output.salaryYear;
                     },
                   ),
                   const SizedBox(height: 20),
@@ -88,14 +102,14 @@ class _SalaryScreenState extends State<SalaryScreen> {
                               Expanded(
                                 child: IncomeCard(
                                   title: "Day",
-                                  income: state.calculation.dayCost,
+                                  income: output.dayCost,
                                 ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: IncomeCard(
                                   title: "Hour",
-                                  income: state.calculation.hourCost,
+                                  income: output.hourCost,
                                 ),
                               ),
                             ],
@@ -104,14 +118,14 @@ class _SalaryScreenState extends State<SalaryScreen> {
                           IncomeCard(
                             emphasized: isPrepayment,
                             title: "Prepayment",
-                            income: state.calculation.prepayment,
+                            income: output.prepayment,
                             fractionDigits: 2,
                           ),
                           const SizedBox(height: 12),
                           IncomeCard(
                             emphasized: !isPrepayment,
                             title: "Salary",
-                            income: state.calculation.salary,
+                            income: output.salary,
                             fractionDigits: 2,
                           ),
                         ],
@@ -141,7 +155,7 @@ class _SalaryScreenState extends State<SalaryScreen> {
                                 child: IncomeCard(
                                   type: IncomeCardType.info,
                                   title: "Rate",
-                                  income: state.constraints.rate,
+                                  income: userInput.rate,
                                   editable: true,
                                 ),
                               ),
@@ -150,7 +164,7 @@ class _SalaryScreenState extends State<SalaryScreen> {
                                 child: IncomeCard(
                                   type: IncomeCardType.info,
                                   title: "Rate - %",
-                                  income: state.calculation.total,
+                                  income: output.total,
                                 ),
                               ),
                             ],
@@ -158,19 +172,19 @@ class _SalaryScreenState extends State<SalaryScreen> {
                           const SizedBox(height: 12),
                           InfoCard(
                             leftText: "Prepayment day",
-                            rightText: "${state.constraints.boundaries.$2}th",
+                            rightText: "${userInput.boundaries.$2}th",
                             editable: true,
                           ),
                           const SizedBox(height: 12),
                           InfoCard(
                             leftText: "Salary day",
-                            rightText: "${state.constraints.boundaries.$1}th",
+                            rightText: "${userInput.boundaries.$1}th",
                             editable: true,
                           ),
                           const SizedBox(height: 12),
                           InfoCard(
                             leftText: "Middle day",
-                            rightText: "${state.constraints.middleDay}th",
+                            rightText: "${userInput.middleDay}th",
                             editable: true,
                           ),
                           const SizedBox(height: 12),
@@ -190,7 +204,7 @@ class _SalaryScreenState extends State<SalaryScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SelectableWeek(
-                            initialData: state.constraints.weekends,
+                            initialData: userInput.weekends,
                             onChange: _updateWeekends,
                           ),
                         ],
@@ -200,9 +214,9 @@ class _SalaryScreenState extends State<SalaryScreen> {
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
