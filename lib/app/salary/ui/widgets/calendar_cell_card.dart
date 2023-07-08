@@ -12,6 +12,7 @@ class CalendarCellCard extends StatelessWidget {
     this.selected = false,
     this.size = 50,
     this.disabled = false,
+    this.border = false,
     this.selectedColor = AppColors.primary,
     this.textColor,
   });
@@ -21,6 +22,7 @@ class CalendarCellCard extends StatelessWidget {
   final bool selected;
   final bool disabled;
   final double size;
+  final bool border;
   final Color selectedColor;
   final Color? textColor;
 
@@ -43,6 +45,7 @@ class CalendarCellCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
+        border: border ? Border.all(width: 2, color: selectedColor) : null,
       ),
       alignment: Alignment.center,
       child: Column(

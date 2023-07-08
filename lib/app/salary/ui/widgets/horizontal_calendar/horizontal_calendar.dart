@@ -8,11 +8,16 @@ class HorizontalCalendar extends StatelessWidget {
     required this.date,
     required this.range,
     this.cellSize = 64,
+    this.padSize = 16,
     this.whetherActive,
+    this.whetherHasDot,
+    this.whetherHasBorder,
     this.weekends,
     this.holidays,
     this.onDoubleTap,
   });
+
+  final double padSize;
 
   final DateTime date;
   final List<DateTime> range;
@@ -21,6 +26,9 @@ class HorizontalCalendar extends StatelessWidget {
   final Set<DateTime>? holidays;
 
   final bool Function(DateTime date)? whetherActive;
+  final bool Function(DateTime date)? whetherHasDot;
+  final bool Function(DateTime date)? whetherHasBorder;
+
   final Function(DateTime date)? onDoubleTap;
 
   final double cellSize;
@@ -40,12 +48,13 @@ class HorizontalCalendar extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 8),
             itemBuilder: (_, index) {
               final item = range[index];
+
               final active = whetherActive?.call(item) ?? true;
+              final hasDot = whetherHasDot?.call(item) ?? false;
+              final hasBorder = whetherHasBorder?.call(item) ?? false;
 
               final isWeekend = weekends?.contains(item.weekday) ?? false;
               final isHoliday = holidays?.contains(item) ?? false;
-
-              final hasDot = active && !(isWeekend || isHoliday);
 
               Color? textColorOverride;
               if (active) {
@@ -56,7 +65,7 @@ class HorizontalCalendar extends StatelessWidget {
                 }
               }
 
-              return GestureDetector(
+              final widget = GestureDetector(
                 onDoubleTap:
                     onDoubleTap != null ? () => onDoubleTap!(item) : null,
                 child: HorizontalCalendarCell(
@@ -67,9 +76,26 @@ class HorizontalCalendar extends StatelessWidget {
                       item.year == date.year,
                   active: active,
                   dot: hasDot,
+                  border: hasBorder,
                   textColor: textColorOverride,
                 ),
               );
+
+              if (index == 0) {
+                return Padding(
+                  padding: EdgeInsets.only(left: padSize),
+                  child: widget,
+                );
+              }
+
+              if (index == range.length - 1) {
+                return Padding(
+                  padding: EdgeInsets.only(right: padSize),
+                  child: widget,
+                );
+              }
+
+              return widget;
             },
           ),
         ),

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_manager/app/core/service_locator/service_locator.dart';
 import 'package:life_manager/app/core/ui/exceptions.dart';

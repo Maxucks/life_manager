@@ -10,6 +10,7 @@ class HorizontalCalendarCell extends StatelessWidget {
     this.selectedColor = AppColors.primary,
     this.dot = false,
     this.active = false,
+    this.border = false,
     this.maxSize = 45,
     this.dotSize = 5,
     this.textColor,
@@ -20,6 +21,7 @@ class HorizontalCalendarCell extends StatelessWidget {
   final Color selectedColor;
   final bool dot;
   final double dotSize;
+  final bool border;
   final bool active;
   final double maxSize;
   final Color? textColor;
@@ -37,6 +39,7 @@ class HorizontalCalendarCell extends StatelessWidget {
           size: _cellSize,
           date: date,
           type: CalendarCellType.weekdayWithNumber,
+          border: border,
           selected: selected,
           disabled: !active,
           textColor: textColor,

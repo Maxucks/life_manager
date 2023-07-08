@@ -65,12 +65,17 @@ class SalaryService {
     // Calendar section
     final calendarRange = _createRangeFromBoundaries(
       c: constraints,
-      // isPrepayment: isPrepayment,
       salaryMonth: salaryMonth,
       salaryYear: salaryYear,
       salaryMonthDays: salaryLastDay,
     );
-    final daysLeft = _daysLeftTillSalary(date, calendarRange);
+    final daysLeft = _daysLeftTillSalary(
+      date,
+      c: constraints,
+      range: calendarRange,
+      isPrepayment: isPrepayment,
+      salaryLastDay: salaryLastDay,
+    );
 
     // Salary section
     final monthRange =
@@ -92,9 +97,21 @@ class SalaryService {
     );
   }
 
-  int _daysLeftTillSalary(DateTime date, CalendarRange range) {
-    final currentDayIndex = range.indexWhere((d) => d.day == date.day);
-    return range.length - currentDayIndex;
+  int _daysLeftTillSalary(
+    DateTime date, {
+    required SalaryConstraints c,
+    required CalendarRange range,
+    required bool isPrepayment,
+    required int salaryLastDay,
+  }) {
+    if (isPrepayment) {
+      return c.boundaries.$2 - date.day;
+    } else {
+      if (date.day >= c.boundaries.$2 && date.day <= salaryLastDay) {
+        return salaryLastDay - date.day + c.boundaries.$1;
+      }
+      return c.boundaries.$1 - date.day;
+    }
   }
 
   /// Recognize half
