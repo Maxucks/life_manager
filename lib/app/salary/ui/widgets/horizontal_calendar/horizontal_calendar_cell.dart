@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/core/utils/constants.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/salary/ui/widgets/calendar_cell_card.dart';
 
 class HorizontalCalendarCell extends StatelessWidget {
@@ -7,7 +7,6 @@ class HorizontalCalendarCell extends StatelessWidget {
     super.key,
     required this.date,
     this.selected = false,
-    this.selectedColor = AppColors.primary,
     this.dot = false,
     this.active = false,
     this.border = false,
@@ -18,7 +17,6 @@ class HorizontalCalendarCell extends StatelessWidget {
 
   final DateTime date;
   final bool selected;
-  final Color selectedColor;
   final bool dot;
   final double dotSize;
   final bool border;
@@ -50,7 +48,9 @@ class HorizontalCalendarCell extends StatelessWidget {
           height: dotSize,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: dot ? AppColors.primary : Colors.transparent,
+              color: dot
+                  ? context.theme.palette.accent.primary
+                  : Colors.transparent,
               shape: BoxShape.circle,
             ),
           ),

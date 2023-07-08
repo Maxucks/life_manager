@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/core/utils/constants.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/salary/ui/widgets/info_card.dart';
 
 enum IncomeCardType { income, info }
@@ -30,16 +30,18 @@ class IncomeCard extends StatelessWidget {
     return "$sign$formattedIncome${showCurrency ? "₽" : ""}";
   }
 
-  Color get _incomeColor => type == IncomeCardType.income
-      ? (income >= 0 ? AppColors.positive : AppColors.negative)
-      : Colors.black;
+  Color _incomeColor(BuildContext context) => type == IncomeCardType.income
+      ? (income >= 0
+          ? context.theme.palette.status.positive
+          : context.theme.palette.status.negative)
+      : context.theme.palette.text.primary;
 
   @override
   Widget build(BuildContext context) {
     return InfoCard(
       leftText: title,
       rightText: _incomeString,
-      rightTextColor: _incomeColor,
+      rightTextColor: _incomeColor(context),
       emphasized: emphasized,
       editable: editable,
     );

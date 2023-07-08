@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/core/utils/constants.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/core/utils/date_time_utils.dart';
 
 enum CalendarCellType { weekday, number, weekdayWithNumber }
@@ -13,7 +13,7 @@ class CalendarCellCard extends StatelessWidget {
     this.size = 50,
     this.disabled = false,
     this.border = false,
-    this.selectedColor = AppColors.primary,
+    this.selectedColor,
     this.textColor,
   });
 
@@ -23,19 +23,23 @@ class CalendarCellCard extends StatelessWidget {
   final bool disabled;
   final double size;
   final bool border;
-  final Color selectedColor;
+  final Color? selectedColor;
   final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
-    final color = textColor ??
+    final usedSelectedColor =
+        selectedColor ?? context.theme.palette.accent.primary;
+
+    final Color color = textColor ??
         (selected
-            ? Colors.white
+            ? context.theme.palette.text.primaryInverted
             : disabled
                 ? Colors.grey
                 : Colors.black);
 
-    final bgColor = selected ? selectedColor : Colors.white;
+    final bgColor =
+        selected ? usedSelectedColor : context.theme.palette.foreground.primary;
 
     final fontWeigth = selected ? FontWeight.w600 : FontWeight.w400;
 
@@ -45,7 +49,7 @@ class CalendarCellCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        border: border ? Border.all(width: 2, color: selectedColor) : null,
+        border: border ? Border.all(width: 2, color: usedSelectedColor) : null,
       ),
       alignment: Alignment.center,
       child: Column(
@@ -75,7 +79,7 @@ class CalendarCellCard extends StatelessWidget {
 
     if (selected) {
       final filter = ColorFilter.mode(
-        selectedColor.withOpacity(0.1),
+        usedSelectedColor.withOpacity(0.1),
         BlendMode.srcATop,
       );
       return ColorFiltered(

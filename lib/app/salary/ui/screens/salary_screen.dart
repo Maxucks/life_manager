@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/bloc.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/events.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/state.dart';
@@ -27,7 +28,7 @@ class _SalaryScreenState extends State<SalaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+      backgroundColor: context.theme.palette.background.primary,
       body: BlocBuilder<SalaryBloc, SalaryState>(
         builder: (context, state) {
           if (state.constraints == null) {

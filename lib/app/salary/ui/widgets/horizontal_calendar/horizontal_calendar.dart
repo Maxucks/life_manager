@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/core/utils/constants.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/salary/ui/widgets/horizontal_calendar/horizontal_calendar_cell.dart';
 
 class HorizontalCalendar extends StatelessWidget {
@@ -59,9 +59,9 @@ class HorizontalCalendar extends StatelessWidget {
               Color? textColorOverride;
               if (active) {
                 if (isWeekend) {
-                  textColorOverride = Colors.grey;
+                  textColorOverride = context.theme.palette.text.secondary;
                 } else if (isHoliday) {
-                  textColorOverride = AppColors.negative;
+                  textColorOverride = context.theme.palette.status.negative;
                 }
               }
 
