@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:life_manager/app/core/utils/context_utils.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -18,15 +19,20 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usedRightTextColor =
+        rightTextColor ?? context.theme.palette.text.primary;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       decoration: BoxDecoration(
-        color: emphasized ? Colors.green : Colors.white,
+        color: emphasized
+            ? context.theme.palette.status.positive
+            : context.theme.palette.foreground.primary,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         boxShadow: emphasized
             ? [
                 BoxShadow(
-                  color: Colors.green.withOpacity(0.1),
+                  color: context.theme.palette.status.positive.withOpacity(0.1),
                   blurRadius: 10,
                   spreadRadius: 5,
                   offset: const Offset(0, 5),
@@ -41,7 +47,9 @@ class InfoCard extends StatelessWidget {
             leftText,
             style: TextStyle(
               fontSize: 16,
-              color: emphasized ? Colors.white : Colors.black,
+              color: emphasized
+                  ? context.theme.palette.text.primaryInverted
+                  : context.theme.palette.text.primary,
             ),
           ),
           const Spacer(),
@@ -49,17 +57,19 @@ class InfoCard extends StatelessWidget {
             rightText,
             style: TextStyle(
               fontSize: 18,
-              color: emphasized ? Colors.white : rightTextColor,
+              color: emphasized
+                  ? context.theme.palette.text.primaryInverted
+                  : usedRightTextColor,
               fontWeight: FontWeight.w600,
               letterSpacing: -0.5,
             ),
           ),
           if (editable) ...[
             const SizedBox(width: 8),
-            const Icon(
+            Icon(
               Icons.edit,
               size: 16,
-              color: Colors.grey,
+              color: context.theme.palette.text.secondary,
             ),
           ],
         ],

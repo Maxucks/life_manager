@@ -35,8 +35,8 @@ class CalendarCellCard extends StatelessWidget {
         (selected
             ? context.theme.palette.text.primaryInverted
             : disabled
-                ? Colors.grey
-                : Colors.black);
+                ? context.theme.palette.text.secondary
+                : context.theme.palette.text.primary);
 
     final bgColor =
         selected ? usedSelectedColor : context.theme.palette.foreground.primary;

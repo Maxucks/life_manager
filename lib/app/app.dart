@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:life_manager/app/core/ui/bloc/theme_bloc.dart';
-import 'package:life_manager/app/core/ui/bloc/theme_state.dart';
+import 'package:life_manager/app/core/ui/theme/bloc/theme_bloc.dart';
+import 'package:life_manager/app/core/ui/theme/bloc/theme_state.dart';
+import 'package:life_manager/app/core/ui/theme/dark_theme.dart';
 import 'package:life_manager/app/core/ui/theme/light_theme.dart';
 import 'package:life_manager/app/core/ui/theme/theme_provider.dart';
 import 'package:life_manager/app/salary/ui/screens/salary_screen.dart';
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
       home: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
           return ThemeProvider(
-            theme: state.isLightTheme ? const LightTheme() : const LightTheme(),
+            theme: state.isLightTheme ? const LightTheme() : const DarkTheme(),
             child: const SalaryScreen(),
           );
         },

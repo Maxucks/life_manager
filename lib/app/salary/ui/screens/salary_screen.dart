@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:life_manager/app/core/ui/theme/bloc/theme_bloc.dart';
+import 'package:life_manager/app/core/ui/theme/bloc/theme_events.dart';
+import 'package:life_manager/app/core/ui/theme/bloc/theme_state.dart';
 import 'package:life_manager/app/core/utils/context_utils.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/bloc.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/events.dart';
@@ -45,6 +48,43 @@ class _SalaryScreenState extends State<SalaryScreen> {
 
           return CustomScrollView(
             slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.only(
+                  top: kToolbarHeight,
+                  left: 16,
+                  right: 16,
+                  bottom: 6,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: BlocBuilder<ThemeBloc, ThemeState>(
+                    builder: (context, state) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Dark mode",
+                            style: TextStyle(
+                              color: context.theme.palette.text.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Switch(
+                            activeColor: context.theme.palette.accent.primary,
+                            inactiveThumbColor:
+                                context.theme.palette.text.primary,
+                            inactiveTrackColor: Colors.transparent,
+                            value: !state.isLightTheme,
+                            onChanged: (value) {
+                              final bloc = context.read<ThemeBloc>();
+                              bloc.add(SwitchThemeEvent());
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
               SalaryScreenCalendar(
                 currentDate: state.currentDate,
                 calculation: state.calculation!,

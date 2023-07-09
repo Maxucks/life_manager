@@ -69,7 +69,6 @@ class SalaryScreenCalendar extends StatelessWidget {
 
     return SliverList(
       delegate: SliverChildListDelegate([
-        const SizedBox(height: 80),
         HorizontalCalendar(
           onDoubleTap: (date) => _toggleHoliday(context, date),
           date: currentDate,
