@@ -1,27 +1,27 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:life_manager/app/core/service_locator/service_locator.dart';
 import 'package:life_manager/app/core/ui/exceptions.dart';
 import 'package:life_manager/app/salary/application/services/salary_service.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/events.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/state.dart';
 
 class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
-  SalaryBloc() : super(SalaryState.initial()) {
+  SalaryBloc({
+    required this.service,
+  }) : super(SalaryState.initial()) {
     on<CalculateSalaryEvent>(_calculateSalaryHandler);
     on<UpdateWeekendsSalaryEvent>(_updateWeekendsHandler);
     on<ToggleHolidaySalaryEvent>(_toggleHolidayHandler);
   }
+
+  final SalaryService service;
 
   Future<void> _calculateSalaryHandler(
     CalculateSalaryEvent event,
     Emitter<SalaryState> emit,
   ) async {
     try {
-      // TODO: fix DI
-      final service = sl<SalaryService>();
-
       final date = event.date ?? DateTime.now();
       final constraints = state.constraints ?? await service.getConstraints();
       final calculation = service.getSalary(date, constraints);
@@ -41,9 +41,6 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
     Emitter<SalaryState> emit,
   ) {
     try {
-      // TODO: fix DI
-      final service = sl<SalaryService>();
-
       if (state.constraints == null) {
         throw UINoDataException(
           "state.constraints",
@@ -67,9 +64,6 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
     Emitter<SalaryState> emit,
   ) {
     try {
-      // TODO: fix DI
-      final service = sl<SalaryService>();
-
       if (state.constraints == null) {
         throw UINoDataException(
           "state.constraints",

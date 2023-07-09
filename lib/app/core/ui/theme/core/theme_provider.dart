@@ -23,3 +23,7 @@ class ThemeProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(ThemeProvider oldWidget) => oldWidget.theme != theme;
 }
+
+extension ThemeUtils on BuildContext {
+  AppTheme get theme => ThemeProvider.of(this).theme;
+}

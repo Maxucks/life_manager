@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_manager/app/app.dart';
-import 'package:life_manager/app/core/service_locator/service_locator.dart';
-import 'package:life_manager/app/core/ui/theme/bloc/theme_bloc.dart';
-import 'package:life_manager/app/salary/ui/blocs/salary/bloc.dart';
+import 'package:life_manager/app/core/dependency_injection/getit_composers.dart';
+import 'package:life_manager/app/core/dependency_injection/injector/inject_provider.dart';
 
 void main() async {
   await _initApp();
 
+  final composer = createGetitCompositionRoot();
+  await composer.compose();
+
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => ThemeBloc()),
-        BlocProvider(create: (_) => SalaryBloc()),
-      ],
+    InjectProvider(
+      composer: composer,
       child: const App(),
     ),
   );
@@ -21,6 +19,4 @@ void main() async {
 
 Future<void> _initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await configureCompositionRoot();
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:life_manager/app/core/utils/context_utils.dart';
+import 'package:life_manager/app/core/ui/theme/core/theme_provider.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
