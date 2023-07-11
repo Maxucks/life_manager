@@ -67,8 +67,8 @@ class SalaryScreenCalendar extends StatelessWidget {
     final displayDaysLeft = calculation.daysLeft;
     final displayHalf = isPrepayment ? "prepayment" : "salary";
 
-    return SliverList(
-      delegate: SliverChildListDelegate([
+    return Column(
+      children: [
         HorizontalCalendar(
           onDoubleTap: (date) => _toggleHoliday(context, date),
           date: currentDate,
@@ -125,7 +125,7 @@ class SalaryScreenCalendar extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-      ]),
+      ],
     );
   }
 }

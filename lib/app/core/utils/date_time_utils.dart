@@ -36,4 +36,24 @@ extension DateTimeUtils on DateTime {
       : DateTime(year + 1, 1, 0).day;
 
   String get weekdayName => weekdayNames[weekday - 1];
+
+  /// Returns the 1th of next month
+  DateTime get nextMonth {
+    final isDecember = month == 12;
+
+    final mm = isDecember ? 1 : month + 1;
+    final yy = isDecember ? year + 1 : year;
+
+    return DateTime(yy, mm, 1);
+  }
+
+  /// Returns the 1th of previous month
+  DateTime get prevMonth {
+    final isJanuary = month == 1;
+
+    final mm = isJanuary ? 12 : month - 1;
+    final yy = isJanuary ? year - 1 : year;
+
+    return DateTime(yy, mm, 1);
+  }
 }

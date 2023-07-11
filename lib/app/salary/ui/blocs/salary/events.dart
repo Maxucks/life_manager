@@ -19,3 +19,11 @@ class ToggleHolidaySalaryEvent extends SalaryEvent {
 
   final DateTime date;
 }
+
+enum ChangeMonthDirection { next, prev }
+
+class ChangeSalaryMonthEvent extends SalaryEvent {
+  ChangeSalaryMonthEvent({required this.direction});
+
+  final ChangeMonthDirection direction;
+}

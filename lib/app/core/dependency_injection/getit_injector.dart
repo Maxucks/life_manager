@@ -11,7 +11,7 @@ class GetitInjector extends Injector<GetIt> {
   @override
   T obtain<T extends Object>() => i<T>();
 
-  void registerFactory<T extends Object>(
+  void registerLazySingleton<T extends Object>(
     T Function(GetitInjector i) factoryFunc, {
     String? instanceName,
     FutureOr<dynamic> Function(T)? disposingFunction,
@@ -22,6 +22,9 @@ class GetitInjector extends Injector<GetIt> {
         disposingFunction: disposingFunction,
       );
     }
-    i.registerFactory(() => factoryFunc(this), instanceName: instanceName);
+    i.registerLazySingleton(
+      () => factoryFunc(this),
+      instanceName: instanceName,
+    );
   }
 }

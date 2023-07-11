@@ -31,7 +31,7 @@ class ToolsGetitInjectComposer extends InjectComposer<GetitInjector> {
 
   @override
   Future<void> compose() async {
-    injector.registerFactory<JsonAppSerializer>(
+    injector.registerLazySingleton<JsonAppSerializer>(
       (_) => const IsolatedJsonSerializer(),
     );
   }
@@ -44,7 +44,7 @@ class DataSourcesGetitInjectComposer extends InjectComposer<GetitInjector> {
   Future<void> compose() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    injector.registerFactory<AppStorage>(
+    injector.registerLazySingleton<AppStorage>(
       (_) => SharedPrefsStorage(prefs: prefs),
     );
   }
@@ -55,7 +55,7 @@ class RepositoriesGetitInjectComposer extends InjectComposer<GetitInjector> {
 
   @override
   Future<void> compose() async {
-    injector.registerFactory<SalaryRepository>(
+    injector.registerLazySingleton<SalaryRepository>(
       (i) => StorageSalaryRepository(
         source: i.obtain<AppStorage>(),
         serializer: i.obtain<JsonAppSerializer>(),
@@ -69,7 +69,7 @@ class ServicesGetitInjectComposer extends InjectComposer<GetitInjector> {
 
   @override
   Future<void> compose() async {
-    injector.registerFactory<SalaryService>(
+    injector.registerLazySingleton<SalaryService>(
       (i) => SalaryService(
         taxCalculator: const NDFLCalculator(),
         repo: i.obtain<SalaryRepository>(),
@@ -83,10 +83,10 @@ class BlocsGetitInjectComposer extends InjectComposer<GetitInjector> {
 
   @override
   Future<void> compose() async {
-    injector.registerFactory<ThemeBloc>(
+    injector.registerLazySingleton<ThemeBloc>(
       (_) => ThemeBloc(),
     );
-    injector.registerFactory<SalaryBloc>(
+    injector.registerLazySingleton<SalaryBloc>(
       (i) => SalaryBloc(
         service: i.obtain<SalaryService>(),
       ),

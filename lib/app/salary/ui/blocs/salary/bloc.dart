@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_manager/app/core/ui/exceptions.dart';
+import 'package:life_manager/app/core/utils/date_time_utils.dart';
 import 'package:life_manager/app/salary/application/services/salary_service.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/events.dart';
 import 'package:life_manager/app/salary/ui/blocs/salary/state.dart';
@@ -13,9 +14,22 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
     on<CalculateSalaryEvent>(_calculateSalaryHandler);
     on<UpdateWeekendsSalaryEvent>(_updateWeekendsHandler);
     on<ToggleHolidaySalaryEvent>(_toggleHolidayHandler);
+    on<ChangeSalaryMonthEvent>(_changeSalaryMonthHandler);
   }
 
   final SalaryService service;
+
+  void _changeSalaryMonthHandler(
+    ChangeSalaryMonthEvent event,
+    Emitter<SalaryState> emit,
+  ) {
+    final DateTime newDate = event.direction == ChangeMonthDirection.next
+        ? state.currentDate.nextMonth
+        : state.currentDate.prevMonth;
+    final isCurrent = newDate.month == state.currentDate.month &&
+        newDate.year == state.currentDate.year;
+    add(CalculateSalaryEvent(date: isCurrent ? state.currentDate : newDate));
+  }
 
   Future<void> _calculateSalaryHandler(
     CalculateSalaryEvent event,
@@ -23,6 +37,7 @@ class SalaryBloc extends Bloc<SalaryEvent, SalaryState> {
   ) async {
     try {
       final date = event.date ?? DateTime.now();
+
       final constraints = state.constraints ?? await service.getConstraints();
       final calculation = service.getSalary(date, constraints);
 
